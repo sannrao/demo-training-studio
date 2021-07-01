@@ -29,7 +29,6 @@ node {
 
        stage("deploy to system") {
 
-            echo `docker run -it --rm -d -p 8090:80 --name web santoshnrao/demo-training-studio:${env.BUILD_NUMBER}`
-            // sh 'docker run -it --rm -d -p 8090:80 --name web santoshnrao/demo-training-studio:${env.BUILD_NUMBER}'
+            sh "docker run -it --rm -d -p 8090:80 --name web santoshnrao/demo-training-studio:${env.BUILD_NUMBER}"
        }
 }
