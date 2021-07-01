@@ -26,7 +26,6 @@ node {
                   app.push("latest")        
               }    
            }
-        }
 
        stage("deploy to system") {
              app.inside{
@@ -34,3 +33,4 @@ node {
              }
              
        }
+}
