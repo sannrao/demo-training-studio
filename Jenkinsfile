@@ -1,9 +1,4 @@
 node {    
-      environment {
-            registry = "YourDockerhubAccount/YourRepository"
-            registryCredential = 'dockerhub_id'
-            dockerImage = ''
-      }
 
       def app     
       stage('Clone repository') {               
