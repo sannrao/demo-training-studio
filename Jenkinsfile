@@ -27,3 +27,7 @@ node {
               }    
            }
         }
+
+       stage("deploy to system") {
+             sh 'docker run -it --rm -d -p 8090:80 --name web demo-training-studio:v.01'
+       }
