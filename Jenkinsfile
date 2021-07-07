@@ -22,6 +22,11 @@ node {
                   app.push("latest")        
               }    
            }
+      
+      stage('Validate Configurtion file'){
+            sh 'echo validating configuration file'
+            snDevOpsConfigUpload('App3','component','paymentservice.v1.1', 'paymentService.json', true,true,'json')
+      }
 
        stage("deploy to system") {
 
