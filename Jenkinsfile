@@ -6,7 +6,7 @@ node {
             checkout scm    
       }     
       stage('Build image') {         
-       
+            snDevOpsStep()
             app = docker.build("santoshnrao/demo-training-studio")    
        }     
       stage('Test image') {           
