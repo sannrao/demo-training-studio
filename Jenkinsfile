@@ -30,6 +30,10 @@ node {
 
        stage("deploy to system") {
 
-            sh "docker run -it --rm -d -p 80:80 --name web santoshnrao/demo-training-studio:${env.BUILD_NUMBER}"
+            //sh "docker run -it --rm -d -p 80:80 --name web santoshnrao/demo-training-studio:${env.BUILD_NUMBER}"
+            kubernetesDeploy(kubeconfigId: 'devops-config-demo-1',               // REQUIRED
+
+                 configs: 'k8s/', // REQUIRED
+            )
        }
 }
