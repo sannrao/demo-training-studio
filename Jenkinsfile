@@ -7,7 +7,7 @@ node {
       }     
       stage('Build image') {       
 
-            snDevOpsStep(enabled:true)
+            snDevOpsStep()
 
             app = docker.build("santoshnrao/demo-training-studio")    
        }     
