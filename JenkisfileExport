@@ -23,7 +23,6 @@ node {
                 echo "Reading config from file name ${fullFileName}"
                 echo " ++++++++++++ BEGIN OF file content ***************"
                 sh "cat ${fullFileName}"
-                sh "cat $fullFileName"
                 echo " ++++++++++++ END OF file content ***************"
                 // snDevOpsChange()
                 echo "deploy finished successfully."
