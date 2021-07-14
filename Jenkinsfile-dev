@@ -7,6 +7,7 @@ node {
     def exportFormat ='json'
     def fileNamePrefix ='exported_file_'
     def fullFileName="${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
+    def changeSetId=""
 
     stage('Clone repository') {               
         
@@ -38,7 +39,13 @@ node {
         sh 'echo validating configuration file'
         result = snDevOpsConfigUpload(applicationName:'App1',target:'component',namePath:'paymentservice.v1.1', fileName:'paymentService', autoCommit:'true',autoValidate:'true',dataFormat:'json')
         echo "validation result $result"
+        changeSetId = $result
 
+    }
+
+    step("Get snapshots created"){
+        changeSetResults = snDevOpsConfigGetSnapshots(applicationName:"${appName}",deployableName:"${deployName}",changeSetId:"${changeSetId}")
+        echo "ChangeSet Result : ${changeSetResults}"
     }
 
     stage('Publish the snapshot'){
