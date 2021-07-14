@@ -14,20 +14,20 @@ node {
         
         echo "checkout scm"
         checkout scm    
-        snDevOpsStep()
+        
     }     
     
-    // stage('Build image') {         
-    //     snDevOpsStep()
-    //     app = docker.build("santoshnrao/demo-training-studio")    
-    // }     
+    stage('Build image') {         
+        snDevOpsStep()
+        app = docker.build("santoshnrao/demo-training-studio")    
+    }     
 
-    // stage('Test image') {           
-    //     app.inside {            
+    stage('Test image') {           
+        app.inside {            
             
-    //         sh 'echo "Tests passed"'        
-    //     }    
-    // }     
+            sh 'echo "Tests passed"'        
+        }    
+    }     
     // stage('Push image') {
     //             sh 'ls -a'
     //             docker.withRegistry('https://registry.hub.docker.com', 'santoshnrao-dockerhub') {            
