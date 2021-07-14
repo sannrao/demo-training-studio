@@ -16,7 +16,9 @@ node {
         }
         stage('deploy'){
                 echo "deploy started."
-                echo " ++++++++++++"
+                echo " ++++++++++++ file content ***************"
+                sh 'cat "${exportFormat}"'
+                echo " ++++++++++++ file content ***************"
                 // snDevOpsChange()
                 echo "deploy finished successfully."
         }
