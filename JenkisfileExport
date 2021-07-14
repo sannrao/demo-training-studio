@@ -1,6 +1,5 @@
 node {    
-
-    agent any
+    
     def appName ='App1'
     def snapName =''
     def deployName = 'PROD-US'
