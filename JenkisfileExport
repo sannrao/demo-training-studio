@@ -19,7 +19,7 @@ node {
                 echo " ++++++++++++ file content ***************"
                 echo "file name ${fileName}_${currentBuild.number}"
                 fullFileName="${fileName}_${currentBuild.number}"
-                sh 'cat ${fullFileName}'
+                sh 'cat $fullFileName'
                 
                 echo " ++++++++++++ file content ***************"
                 // snDevOpsChange()
