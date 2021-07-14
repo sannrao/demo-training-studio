@@ -25,7 +25,7 @@ node {
       
       stage('Validate Configurtion file'){
             sh 'echo validating configuration file'
-            snDevOpsConfigUpload(applicationName:'App1',target:'component',namePath:'paymentservice.v1.1', fileName:'paymentService', autoCommit:'true',autoValidate:'true',dataFormat:'json')
+            result = snDevOpsConfigUpload(applicationName:'App1',target:'component',namePath:'paymentservice.v1.1', fileName:'paymentService', autoCommit:'true',autoValidate:'true',dataFormat:'json')
       }
 
        stage("deploy to system") {
