@@ -1,0 +1,32 @@
+node {    
+
+    agent any
+    def appName ='App1'
+    def snapName =''
+    def deployName = 'PROD-US'
+    def exportFormat ='json'
+    def fileName ='exported_file_'
+    def exporterName ='Santosh-yaml'   
+    stages {
+        stage('Clone repository') {               
+            checkout scm    
+        }     
+        stage('export') {
+            steps {
+                echo "<<<<<<<<<export file is starting >>>>>>>>"
+          script{
+               response = snDevOpsConfigExport(applicationName: "${appName}", snapshotName: "${snapName}", deployableName: "${deployName}",exporterFormat: "${exportFormat}", fileName:"${fileName}_${currentBuild.number}",exporterName: "${exporterName}")
+            }
+                echo " RESPONSE FROM EXPORT : ${response}"
+            }
+        }
+        stage('deploy'){
+            steps{
+                echo "deploy started."
+                echo " ++++++++++++"
+                // snDevOpsChange()
+                echo "deploy finished successfully."
+            }
+        }
+    }
+}
