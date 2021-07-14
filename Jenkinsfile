@@ -1,6 +1,16 @@
 node {    
 
       def app     
+      def app     
+      def appName='App1'
+      def snapName=''
+      def deployName = 'PROD-US'
+      def exportFormat ='json'
+      def fileNamePrefix ='exported_file_'
+      def fullFileName="${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
+      def changeSetId=""
+      def snapshotName=""
+
       stage('Clone repository') {               
              
             checkout scm    
@@ -23,12 +33,33 @@ node {
                   app.push("${env.BUILD_NUMBER}")            
                   app.push("latest")        
               }    
+
            }
+
       
       stage('Validate Configurtion file'){
             sh 'echo validating configuration file'
-            result = snDevOpsConfigUpload(applicationName:'App1',target:'component',namePath:'paymentservice.v1.1', fileName:'paymentService', autoCommit:'true',autoValidate:'true',dataFormat:'json')
+            result = snDevOpsConfigUpload(applicationName:"${appName}",target:'component',namePath:'paymentservice.v1.1', fileName:"${fullFileName}", autoCommit:'true',autoValidate:'true',dataFormat:"${exportFormat}")
       }
+
+    stage("register change set to pipeline"){
+        echo "Change set registration for ${changeSetId}"
+        changeSetRegResult = snDevOpsConfigRegisterChangeSet(changesetId:"${changeSetId}")
+    }
+
+    step("Get snapshots created"){
+        echo "Triggering Get snapshots for applicationName:${appName},deployableName:${deployName},changeSetId:${changeSetId}"
+
+        changeSetResults = snDevOpsConfigGetSnapshots(applicationName:"${appName}",deployableName:"${deployName}",changeSetId:"${changeSetId}")
+        echo "ChangeSet Result : ${changeSetResults}"
+    }
+
+    stage('Publish the snapshot'){
+        echo "Step to publish snapshot applicationName:${appName},deployableName:${deployName} snapshotName:${snapshotName}"
+        publishSnapShotResult(applicationName:"${appName}",,deployableName:"${deployName}",snapshotName: "${snapshotName}")
+    }
+
+
 
        stage("deploy to system") {
              
