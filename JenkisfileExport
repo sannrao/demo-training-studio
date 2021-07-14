@@ -18,7 +18,9 @@ node {
                 echo "deploy started."
                 echo " ++++++++++++ file content ***************"
                 echo "file name ${fileName}_${currentBuild.number}"
-                sh 'cat "${fileName}_${currentBuild.number}"'
+                fullFileName="${fileName}_${currentBuild.number}"
+                sh 'cat ${fullFileName}'
+                
                 echo " ++++++++++++ file content ***************"
                 // snDevOpsChange()
                 echo "deploy finished successfully."
