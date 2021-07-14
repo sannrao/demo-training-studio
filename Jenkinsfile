@@ -38,7 +38,7 @@ node {
       
       stage('Validate Configurtion file'){
             sh 'echo validating configuration file'
-            result = snDevOpsConfigUpload(applicationName:"${appName}",target:'component',namePath:'paymentservice.v1.1', fileName:"${fullFileName}", autoCommit:'true',autoValidate:'true',dataFormat:"${exportFormat}")
+            result = snDevOpsConfigUpload(applicationName:"${appName}",target:'component',namePath:'paymentservice.v1.1', fileName:"paymentService", autoCommit:'true',autoValidate:'true',dataFormat:"${exportFormat}")
       }
 
     stage("register change set to pipeline"){
