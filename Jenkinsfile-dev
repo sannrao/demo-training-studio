@@ -44,13 +44,20 @@ node {
 
     }
 
+    stage("register change set to pipeline"){
+        echo "Change set registration for ${changeSetId}"
+        changeSetRegResult = snDevOpsConfigRegisterChangeSet(changesetId:"${changeSetId}")
+    }
+
     step("Get snapshots created"){
+        echo "Triggering Get snapshots for applicationName:${appName},deployableName:${deployName},changeSetId:${changeSetId}"
+
         changeSetResults = snDevOpsConfigGetSnapshots(applicationName:"${appName}",deployableName:"${deployName}",changeSetId:"${changeSetId}")
         echo "ChangeSet Result : ${changeSetResults}"
     }
 
     stage('Publish the snapshot'){
-        echo 'step to publish snapshot'
+        echo "Step to publish snapshot applicationName:${appName},deployableName:${deployName} snapshotName:${snapshotName}"
         publishSnapShotResult(applicationName:"${appName}",,deployableName:"${deployName}",snapshotName: "${snapshotName}")
     }
 
