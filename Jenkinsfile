@@ -1,7 +1,6 @@
 node {    
 
       def app     
-      def app     
       def appName='App1'
       def snapName=''
       def deployName = 'PROD-US'
