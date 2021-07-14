@@ -6,7 +6,6 @@ node {
     def exportFormat ='json'
     def fileName ='exported_file_'
     def exporterName ='Santosh-yaml'   
-    stages {
         stage('Clone repository') {               
             checkout scm    
         }     
@@ -27,5 +26,4 @@ node {
                 echo "deploy finished successfully."
             }
         }
-    }
 }
