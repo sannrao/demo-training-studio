@@ -77,22 +77,43 @@ node {
 
     stage('Publish the snapshot'){
         echo "Step to publish snapshot applicationName:${appName},deployableName:${deployName} snapshotName:${snapshotName}"
-        snDevOpsConfigPublish(applicationName:"${appName}",deployableName:"${deployName}",snapshotName: "${snapshotName}")
+        publishSnapshotResults = snDevOpsConfigPublish(applicationName:"${appName}",deployableName:"${deployName}",snapshotName: "${snapshotName}")
+        echo " Publish result for applicationName:${appName},deployableName:${deployName} snapshotName:${snapshotName} is ${publishSnapshotResults} "
     }
 
 
-
-       stage("deploy to system") {
-             
-             sh ' echo deployment done'
-            //sh "docker run -it --rm -d -p 80:80 --name web santoshnrao/demo-training-studio:${env.BUILD_NUMBER}"
+      stage('Download Snapshots from Service Now') {
             
-//             withKubeConfig([credentialsId: 'santosh-devops-config-k8s']) {
-//                         sh 'kubectl apply -f k8s/'
-//                   }
-            // kubernetesDeploy(kubeconfigId: 'devops-config-demo-1',               // REQUIRED
+            echo "Exporting for App: ${appName} Deployable; ${deployName} Exporter name ${exporterName} "
+            echo "Configfile exporter file name ${fullFileName}"
+            sh  'echo "<<<<<<<<<export file is starting >>>>>>>>"'
+               response = snDevOpsConfigExport(applicationName: "${appName}", snapshotName: "${snapName}", deployableName: "${deployName}",exporterFormat: "${exportFormat}", fileName:"${fullFileName}",exporterName: "${exporterName}")
+                echo " RESPONSE FROM EXPORT : ${response}"
+        }
+      
+        stage('Deploy to the System'){
+                echo "Devops Change trigger change request"
+                snDevOpsChange()
+              
+                echo "Reading config from file name ${fullFileName}"
+                echo " ++++++++++++ BEGIN OF File Content ***************"
+                sh "cat ${fullFileName}"
+                echo " ++++++++++++ END OF File content ***************"
+                
+                echo "deploy finished successfully."
+        }
 
-            //      configs: 'k8s/', // REQUIRED
-            // )
-       }
+//        stage("deploy to system") {
+             
+//              sh ' echo deployment done'
+//             //sh "docker run -it --rm -d -p 80:80 --name web santoshnrao/demo-training-studio:${env.BUILD_NUMBER}"
+            
+// //             withKubeConfig([credentialsId: 'santosh-devops-config-k8s']) {
+// //                         sh 'kubectl apply -f k8s/'
+// //                   }
+//             // kubernetesDeploy(kubeconfigId: 'devops-config-demo-1',               // REQUIRED
+
+//             //      configs: 'k8s/', // REQUIRED
+//             // )
+//        }
 }
