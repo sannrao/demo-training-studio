@@ -66,9 +66,9 @@ node {
 
                 if(it.validation == "passed"){
                       echo "validation passed for snapshot : ${it.name}"
-                      snapshotName = ${it.name}
+                      snapshotName = it.name
                 }else{
-                      echo "Snapshot failed to get validated : ${${it.name}}" ;
+                      echo "Snapshot failed to get validated : ${it.name}" ;
                       assert it.validation == "passed"
                 }
           }
