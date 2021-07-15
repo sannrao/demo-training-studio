@@ -71,7 +71,14 @@ node {
                       echo "Snapshot failed to get validated : ${it.name}" ;
                       assert it.validation == "passed"
                 }
+            
+                if (!snapshotName?.trim()){
+                      error "No snapshot found to proceed" ;
+                }
+                echo "Snapshot Name : ${snapshotName} "                
           }
+          
+          
           
     }
 
