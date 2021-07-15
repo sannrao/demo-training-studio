@@ -62,7 +62,7 @@ node {
         def changeSetResultsObject = readJSON text: changeSetResults
 //         def changeSetResultsObject = jsonSlurper.parseText("${changeSetResults}")
         
-          list.each(changeSetResultsObject){
+          changeSetResultsObject.each {
 
                 if(it.validation == "passed"){
                       echo "validation passed for snapshot : ${it.name}"
