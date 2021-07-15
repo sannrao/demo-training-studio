@@ -72,13 +72,11 @@ node {
                       assert it.validation == "passed"
                 }
             
-                if (!snapshotName?.trim()){
-                      error "No snapshot found to proceed" ;
-                }
-                echo "Snapshot Name : ${snapshotName} "                
           }
-          
-          
+          if (!snapshotName?.trim()){
+                error "No snapshot found to proceed" ;
+          }
+          echo "Snapshot Name : ${snapshotName} "                
           
     }
 
