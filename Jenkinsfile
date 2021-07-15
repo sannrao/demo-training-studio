@@ -58,11 +58,26 @@ node {
 
         changeSetResults = snDevOpsConfigGetSnapshots(applicationName:"${appName}",deployableName:"${deployName}",changeSetId:"${changeSetId}")
         echo "ChangeSet Result : ${changeSetResults}"
+        
+        def jsonSlurper = new JsonSlurper()
+        def changeSetResultsObject = jsonSlurper.parseText("${changeSetResults}")
+        
+          list.each(changeSetResultsObject){
+
+                if(it.validation == "passed"){
+                      echo "validation passed for snapshot : ${it.name}"
+                      snapshotName = ${it.name}
+                }else{
+                      echo "Snapshot failed to get validated : ${${it.name}}" ;
+                      assert 1=2
+                }
+          }
+          
     }
 
     stage('Publish the snapshot'){
         echo "Step to publish snapshot applicationName:${appName},deployableName:${deployName} snapshotName:${snapshotName}"
-        publishSnapShotResult(applicationName:"${appName}",,deployableName:"${deployName}",snapshotName: "${snapshotName}")
+        snDevOpsConfigPublish(applicationName:"${appName}",deployableName:"${deployName}",snapshotName: "${snapshotName}")
     }
 
 
