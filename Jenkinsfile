@@ -4,7 +4,7 @@ node {
       def appName='App1'
       def snapName=''
       def deployName = 'PROD-US'
-      def exportFormat ='yml'
+      def exportFormat ='yaml'
       def fileNamePrefix ='exported_file_'
       def fullFileName="${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
       def changeSetId=""
