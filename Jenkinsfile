@@ -87,6 +87,11 @@ node {
         echo " Publish result for applicationName:${appName},deployableName:${deployName} snapshotName:${snapshotName} is ${publishSnapshotResults} "
     }
 
+        stage('Deploy to the System'){
+                echo "Devops Change trigger change request"
+                snDevOpsChange()
+              
+        }
 
       stage('Download Snapshots from Service Now') {
             
@@ -97,17 +102,17 @@ node {
                 echo " RESPONSE FROM EXPORT : ${response}"
         }
       
-        stage('Deploy to the System'){
-                echo "Devops Change trigger change request"
-                snDevOpsChange()
-              
+      stage("Deploying to PROD-US"){
+            
                 echo "Reading config from file name ${fullFileName}"
                 echo " ++++++++++++ BEGIN OF File Content ***************"
                 sh "cat ${fullFileName}"
                 echo " ++++++++++++ END OF File content ***************"
                 
                 echo "deploy finished successfully."
-        }
+            
+      }
+      
 
 //        stage("deploy to system") {
              
