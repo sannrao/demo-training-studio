@@ -69,7 +69,7 @@ node {
                       snapshotName = ${it.name}
                 }else{
                       echo "Snapshot failed to get validated : ${${it.name}}" ;
-                      assert 1=2
+                      assert it.validation == "passed"
                 }
           }
           
