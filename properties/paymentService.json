@@ -1,0 +1,7 @@
+{
+  "settings" : {
+    "dbport": 27017 ,
+    "dbUserName" : "@@dbUserName@@" ,
+    "dbPassword" : "@@dbPassword@@"
+  }
+}
