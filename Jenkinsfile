@@ -4,7 +4,7 @@ node {
       def appName='App1'
       def snapName=''
       def deployName = 'PROD-US'
-      def exportFormat ='json'
+      def exportFormat ='yml'
       def fileNamePrefix ='exported_file_'
       def fullFileName="${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
       def changeSetId=""
@@ -38,8 +38,8 @@ node {
       
       stage('Validate Configurtion file'){
             sh 'echo validating configuration file'
-            changeSetId = snDevOpsConfigUpload(applicationName:"${appName}",target:'component',namePath:'paymentservice.v1.1', fileName:"paymentService", autoCommit:'true',autoValidate:'true',dataFormat:"${exportFormat}")
-            
+            changeSetId = snDevOpsConfigUpload(applicationName:"${appName}",target:'component',namePath:'paymentservice.v1.1', fileName:"k8s/demo-training-studio-dev", autoCommit:'true',autoValidate:'true',dataFormat:"${exportFormat}")
+
             echo "validation result $changeSetId"
       }
 
