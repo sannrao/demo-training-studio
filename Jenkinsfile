@@ -59,7 +59,7 @@ node {
         changeSetResults = snDevOpsConfigGetSnapshots(applicationName:"${appName}",deployableName:"${deployName}",changeSetId:"${changeSetId}")
         echo "ChangeSet Result : ${changeSetResults}"
         
-        def changeSetResultsObject = readJSON text: ${changeSetResults}
+        def changeSetResultsObject = readJSON text: changeSetResults
 //         def changeSetResultsObject = jsonSlurper.parseText("${changeSetResults}")
         
           list.each(changeSetResultsObject){
