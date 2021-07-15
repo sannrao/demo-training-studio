@@ -8,7 +8,8 @@ node {
     def fullFileName="${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
     def exporterName ='Santosh-yaml'   
         stage('Clone repository') {               
-            checkout scm    
+            //checkout scm    
+            echo "skip cloning"
             
         }     
         stage('export') {
