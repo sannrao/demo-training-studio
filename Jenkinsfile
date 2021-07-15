@@ -10,6 +10,7 @@ node {
       def fullFileName="${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
       def changeSetId=""
       def snapshotName=""
+      def exporterName ='Santosh-yaml' 
 
       stage('Clone repository') {               
              
