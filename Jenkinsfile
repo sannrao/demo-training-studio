@@ -41,7 +41,7 @@ node {
             
 
             sh "echo validating configuration file ${configFilePath}.${exportFormat}"
-            changeSetId = snDevOpsConfigUpload(applicationName:"${appName}",target:'component',namePath:'paymentservice.v1.1', fileName:"k8s/demo-training-studio-dev", autoCommit:'true',autoValidate:'true',dataFormat:"${exportFormat}")
+            changeSetId = snDevOpsConfigUpload(applicationName:"${appName}",target:'component',namePath:'paymentservice.v1.1', fileName:"${configFilePath}", autoCommit:'true',autoValidate:'true',dataFormat:"${exportFormat}")
 
             echo "validation result $changeSetId"
       }
