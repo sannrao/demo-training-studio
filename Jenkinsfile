@@ -21,7 +21,7 @@ node {
             snDevOpsStep()
 
             app = docker.build("santoshnrao/demo-training-studio")    
-            dockerImageName = "santoshnrao/demo-training-studio" + ":" "${env.BUILD_NUMBER}"
+            dockerImageName = "santoshnrao/demo-training-studio" + ":" + "${env.BUILD_NUMBER}"
             
             def snDevopsArtifactPayload = '{"artifacts": [{"name": "' + dockerImageName + '",  "version": " ' + "${env.BUILD_NUMBER}" + ' "semanticVersion": "3.1.0","repositoryName": "dockerhub"}, ],"stageName":"Build image","branchName": "main"}'  ;
             echo " docker Image artifacat ${dockerImageName} "
