@@ -1,1 +1,1 @@
-build trigger 1 2
+build trigger 1 2 3
