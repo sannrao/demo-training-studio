@@ -11,7 +11,8 @@ node {
       def changeSetId=""
       def snapshotName=""
       def exporterName ='Santosh-yaml' 
-      def dockerImageName = ""
+      def dockerImageName = "santoshnrao/demo-training-studio"
+      def dockerImageTag=""
 
       stage('Clone repository') {               
              
@@ -22,7 +23,6 @@ node {
             snDevOpsStep()
 
             app = docker.build("santoshnrao/demo-training-studio")    
-            dockerImageName = "santoshnrao/demo-training-studio" + ":" + "${env.BUILD_NUMBER}"
             
             
        }     
@@ -35,13 +35,16 @@ node {
        stage('Push image') {
             sh 'ls -a'
 
+            dockerImageTag = env.BUILD_NUMBER
+            dockerImageNameTag = "${dockerImageName}" + ":" + "${dockerImageTag}"
+      
             docker.withRegistry('https://registry.hub.docker.com', 'santoshnrao-dockerhub') {            
-                  app.push("${env.BUILD_NUMBER}")            
+                  app.push("${dockerImageTag}")            
                   app.push("latest")        
             }    
 
-            snDevopsArtifactPayload = '{"artifacts": [{"name": "' + dockerImageName + '",  "version": " ' + "${env.BUILD_NUMBER}" + '", "semanticVersion": "3.1.0","repositoryName": "dockerhub"}, ],"stageName":"Build image","branchName": "main"}'  ;
-            echo " docker Image artifacat ${dockerImageName} "
+            snDevopsArtifactPayload = '{"artifacts": [{"name": "' + dockerImageName + '",  "version": " ' + "${dockerImageTag}" + '", "semanticVersion": " ' + "${dockerImageNameTag}",+ '"repositoryName": "' + "${dockerImageName}"+ '"}, ],"stageName":"Build image","branchName": "main"}'  ;
+            echo " docker Image artifacat ${dockerImageNameTag} "
             echo "snDevopsArtifactPayload ${snDevopsArtifactPayload} "
             
             snDevOpsArtifact(artifactsPayload:snDevopsArtifactPayload)
@@ -127,9 +130,10 @@ node {
                 sh 'kubectl config view'
                 
                 echo "********************** BEGIN Deployment ****************"
-                echo "Applying docker image ${dockerImageName}"
+                echo "Applying docker image ${dockerImageNameTag}"
 
-                sh "kubectl apply -f k8s/demo-training-studio-dev.yml --image ${dockerImageName}"
+               sh "helm upgrade demo-training-studio  demo-training-studio/ -i  --set image.tag=10 --set image.repository=${dockerImageName}"  
+            //    sh "kubectl apply -f k8s/demo-training-studio-dev.yml --image ${dockerImageName}"
 
                 echo "********************** END Deployment ****************"
 
