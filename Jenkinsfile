@@ -4,8 +4,8 @@ node {
       def appName='App1'
       def snapName=''
       def deployName = 'PROD-US'
-      def exportFormat ='yaml'
-      def configFilePath = "k8s/demo-training-studio-dev"
+      def exportFormat ='json'
+      def configFilePath = "paymentService"
       def fileNamePrefix ='exported_file_'
       def fullFileName="${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
       def changeSetId=""
