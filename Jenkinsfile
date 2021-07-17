@@ -7,10 +7,11 @@ node {
       def exportFormat ='json'
       def configFilePath = "paymentService"
       def fileNamePrefix ='exported_file_'
-      def fullFileName="${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
+      def fullFileName="${fileNamePrefix}-${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
       def changeSetId=""
       def snapshotName=""
       def exporterName ='Santosh-yaml' 
+      def dockerImageName = ""
 
       stage('Clone repository') {               
              
@@ -23,28 +24,29 @@ node {
             app = docker.build("santoshnrao/demo-training-studio")    
             dockerImageName = "santoshnrao/demo-training-studio" + ":" + "${env.BUILD_NUMBER}"
             
-            def snDevopsArtifactPayload = '{"artifacts": [{"name": "' + dockerImageName + '",  "version": " ' + "${env.BUILD_NUMBER}" + '", "semanticVersion": "3.1.0","repositoryName": "dockerhub"}, ],"stageName":"Build image","branchName": "main"}'  ;
+            
+       }     
+      stage('Test image') {           
+            app.inside {            
+             
+             sh 'echo "Tests passed"'        
+            }    
+        }     
+       stage('Push image') {
+            sh 'ls -a'
+
+            docker.withRegistry('https://registry.hub.docker.com', 'santoshnrao-dockerhub') {            
+                  app.push("${env.BUILD_NUMBER}")            
+                  app.push("latest")        
+            }    
+
+            snDevopsArtifactPayload = '{"artifacts": [{"name": "' + dockerImageName + '",  "version": " ' + "${env.BUILD_NUMBER}" + '", "semanticVersion": "3.1.0","repositoryName": "dockerhub"}, ],"stageName":"Build image","branchName": "main"}'  ;
             echo " docker Image artifacat ${dockerImageName} "
             echo "snDevopsArtifactPayload ${snDevopsArtifactPayload} "
             
             snDevOpsArtifact(artifactsPayload:snDevopsArtifactPayload)
-            
-       }     
-//       stage('Test image') {           
-//             app.inside {            
-             
-//              sh 'echo "Tests passed"'        
-//             }    
-//         }     
-//        stage('Push image') {
-//                   sh 'ls -a'
-//                   docker.withRegistry('https://registry.hub.docker.com', 'santoshnrao-dockerhub') {            
-//                   app.push("${env.BUILD_NUMBER}")            
-//                   app.push("latest")        
-//               }    
 
-//            }
-
+           }
       
       stage('Validate Configurtion file'){
             
@@ -56,9 +58,11 @@ node {
       }
 
     stage("register change set to pipeline"){
+
         echo "Change set registration for ${changeSetId}"
         changeSetRegResult = snDevOpsConfigRegisterChangeSet(changesetId:"${changeSetId}")
         echo "change set registration set result ${changeSetRegResult}"
+
     }
 
     stage("Get snapshots created"){
@@ -118,6 +122,17 @@ node {
                 echo " ++++++++++++ END OF File content ***************"
                 
                 echo "deploy finished successfully."
+
+                sh 'kubectl version'
+                sh 'kubectl config view'
+                
+                echo "********************** BEGIN Deployment ****************"
+                echo "Applying docker image ${dockerImageName}"
+
+                sh "kubectl apply -f k8s/demo-training-studio-dev.yml --image ${dockerImageName}"
+
+                echo "********************** END Deployment ****************"
+
             
       }
       
