@@ -1,6 +1,6 @@
 {
   "settings" : {
-    "dbport": 11111 ,
+    "dbport": 9090 ,
     "dbUserName" : "@@dbUserName@@" ,
     "dbPassword" : "@@dbPassword@@"
   }
