@@ -43,7 +43,7 @@ node {
                   app.push("latest")        
             }    
 
-            snDevopsArtifactPayload = '{"artifacts": [{"name": "' + dockerImageName + '",  "version": " ' + "${dockerImageTag}" + '", "semanticVersion": " ' + "${dockerImageNameTag}"+ '",repositoryName": "' + "${dockerImageName}"+ '"}, ],"stageName":"Build image","branchName": "main"}'  ;
+            snDevopsArtifactPayload = '{"artifacts": [{"name": "' + dockerImageName + '",  "version": " ' + "${dockerImageTag}" + '", "semanticVersion": " ' + "${dockerImageNameTag}"+ '",repositoryName": "' + dockerImageName+ '"}, ],"stageName":"Build image","branchName": "main"}'  ;
             echo " docker Image artifacat ${dockerImageNameTag} "
             echo "snDevopsArtifactPayload ${snDevopsArtifactPayload} "
             
