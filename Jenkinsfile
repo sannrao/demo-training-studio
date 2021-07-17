@@ -132,26 +132,12 @@ node {
                 echo "********************** BEGIN Deployment ****************"
                 echo "Applying docker image ${dockerImageNameTag}"
 
-               sh "helm upgrade demo-training-studio  k8s/demo-training-studio/ -i  --set image.tag=10 --set image.repository=${dockerImageName}"  
+               sh "helm upgrade demo-training-studio  k8s/demo-training-studio/ -i  --set image.tag=${dockerImageTag} --set image.repository=${dockerImageName}"  
             //    sh "kubectl apply -f k8s/demo-training-studio-dev.yml --image ${dockerImageName}"
 
                 echo "********************** END Deployment ****************"
 
             
       }
-      
 
-//        stage("deploy to system") {
-             
-//              sh ' echo deployment done'
-//             //sh "docker run -it --rm -d -p 80:80 --name web santoshnrao/demo-training-studio:${env.BUILD_NUMBER}"
-            
-// //             withKubeConfig([credentialsId: 'santosh-devops-config-k8s']) {
-// //                         sh 'kubectl apply -f k8s/'
-// //                   }
-//             // kubernetesDeploy(kubeconfigId: 'devops-config-demo-1',               // REQUIRED
-
-//             //      configs: 'k8s/', // REQUIRED
-//             // )
-//        }
 }
