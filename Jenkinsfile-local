@@ -29,7 +29,7 @@ node {
 
             snDevOpsStep()
 
-            app = docker.build("santoshnrao/demo-training-studio")    
+            // app = docker.build("santoshnrao/demo-training-studio")    
             
             
        }     
