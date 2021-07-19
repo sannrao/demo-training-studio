@@ -4,7 +4,6 @@ node {
       def appName='App1'
       def snapName=''
       def deployName = 'PROD-US'
-      def exportFormat ='json'
       // Json Example
       // def configFilePath = "paymentService"
       // def exportFormat ='json'
