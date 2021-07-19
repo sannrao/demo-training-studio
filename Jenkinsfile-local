@@ -29,7 +29,7 @@ node {
 
             snDevOpsStep()
 
-            // app = docker.build("santoshnrao/demo-training-studio")    
+            app = docker.build("santoshnrao/demo-training-studio")    
             
             
        }     
@@ -42,13 +42,13 @@ node {
        stage('Push image') {
             sh 'ls -a'
 
-            // dockerImageTag = env.BUILD_NUMBER
-            // dockerImageNameTag = "${dockerImageName}" + ":" + "${dockerImageTag}"
+            dockerImageTag = env.BUILD_NUMBER
+            dockerImageNameTag = "${dockerImageName}" + ":" + "${dockerImageTag}"
       
-            // docker.withRegistry('https://registry.hub.docker.com', 'santoshnrao-dockerhub') {            
-            //       app.push("${dockerImageTag}")            
-            //       app.push("latest")        
-            // }    
+            docker.withRegistry('https://registry.hub.docker.com', 'santoshnrao-dockerhub') {            
+                  app.push("${dockerImageTag}")            
+                  app.push("latest")        
+            }    
 
             snDevopsArtifactPayload = '{"artifacts": [{"name": "' + dockerImageName + '",  "version": "' + "${dockerImageTag}" + '", "semanticVersion": "' + "0.1.${dockerImageTag}"+ '","repositoryName": "' + dockerImageName+ '"}, ],"stageName":"Build image","branchName": "main"}'  ;
             echo " docker Image artifacat ${dockerImageNameTag} "
@@ -133,8 +133,8 @@ node {
                 
                 echo "deploy finished successfully."
 
-            //     sh 'kubectl version'
-            //     sh 'kubectl config view'
+                sh 'kubectl version'
+                sh 'kubectl config view'
                 
                 echo "********************** BEGIN Deployment ****************"
                 echo "Applying docker image ${dockerImageNameTag}"

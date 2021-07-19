@@ -1,7 +1,0 @@
-{
-  "settings" : {
-    "dbport": 2000 ,
-    "dbUserName" : "@@dbUserName@@" ,
-    "dbPassword" : "@@dbPassword@@"
-  }
-}
