@@ -5,12 +5,12 @@ node {
       def snapName=''
       def deployName = 'PROD-US'
       // Json Example
-      // def configFilePath = "paymentService"
-      // def exportFormat ='json'
+      def configFilePath = "paymentService"
+      def exportFormat ='json'
 
       // Yaml Example
-      def exportFormat ='yaml'      
-      def configFilePath = "k8s/demo-training-studio-dev"      
+      // def exportFormat ='yml'      
+      // def configFilePath = "k8s/demo-training-studio-dev"      
 
       def fileNamePrefix ='exported_file_'
       def fullFileName="${fileNamePrefix}-${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
