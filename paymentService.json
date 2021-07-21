@@ -1,6 +1,6 @@
 {
   "settings" : {
-    "dbport": "2017" ,
+    "dbport": "10000" ,
     "dbUserName" : "@@dbUserName@@" ,
     "dbPassword" : "@@dbPassword@@"
   }

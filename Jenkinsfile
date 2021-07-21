@@ -4,7 +4,7 @@ node {
       def appName='App1'
       def snapName=''
       def deployName = 'PROD-US'
-      def setYamlUpload=true
+      def setYamlUpload=false
       
       // Json Example
       def configFilePath = "paymentService"
