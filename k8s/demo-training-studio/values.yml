@@ -42,7 +42,7 @@ service:
 
 mongo:
   dbport : 27017
-  dbUserName : "@@dbusername@@"
+  dbUserName : "@@dbUserName@@"
   dbPassword : "@@dbPassword@@"
 
   
