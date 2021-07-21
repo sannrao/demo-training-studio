@@ -24,11 +24,13 @@ node {
       def dockerImageName = "santoshnrao/demo-training-studio"
       def dockerImageTag=""
 
-      stage('Clone repository') {               
+//       stage('Clone repository') {               
              
+//             checkout scm    
+//       }     
+      stage('Build image') {   
+            
             checkout scm    
-      }     
-      stage('Build image') {       
 
             snDevOpsStep()
 
@@ -36,13 +38,14 @@ node {
             
             
        }     
-      stage('Test image') {           
+      stage('Test') {           
             app.inside {            
              
              sh 'echo "Tests passed"'        
             }    
         }     
-       stage('Push image') {
+      
+       stage('Push docker Image') {
             sh 'ls -a'
 
             dockerImageTag = env.BUILD_NUMBER
@@ -59,26 +62,31 @@ node {
             
             snDevOpsArtifact(artifactsPayload:snDevopsArtifactPayload)
 
-           }
+      }
       
-      stage('Validate Configurtion file'){
+      stage('Upload Configuration Files'){
             
 
             sh "echo validating configuration file ${configFilePath}.${exportFormat}"
             changeSetId = snDevOpsConfigUpload(applicationName:"${appName}",target:'component',namePath:'paymentservice.v1.1', fileName:"${configFilePath}", autoCommit:'true',autoValidate:'true',dataFormat:"${exportFormat}")
 
             echo "validation result $changeSetId"
+            
+              echo "Change set registration for ${changeSetId}"
+              changeSetRegResult = snDevOpsConfigRegisterChangeSet(changesetId:"${changeSetId}")
+              echo "change set registration set result ${changeSetRegResult}"
+            
       }
 
-    stage("register change set to pipeline"){
+//     stage("Register change set to pipeline"){
 
-        echo "Change set registration for ${changeSetId}"
-        changeSetRegResult = snDevOpsConfigRegisterChangeSet(changesetId:"${changeSetId}")
-        echo "change set registration set result ${changeSetRegResult}"
+//         echo "Change set registration for ${changeSetId}"
+//         changeSetRegResult = snDevOpsConfigRegisterChangeSet(changesetId:"${changeSetId}")
+//         echo "change set registration set result ${changeSetRegResult}"
 
-    }
+//     }
 
-    stage("Get snapshots created"){
+    stage("Get snapshot status"){
           
         echo "Triggering Get snapshots for applicationName:${appName},deployableName:${deployName},changeSetId:${changeSetId}"
 
@@ -112,14 +120,17 @@ node {
         echo " Publish result for applicationName:${appName},deployableName:${deployName} snapshotName:${snapshotName} is ${publishSnapshotResults} "
     }
 
-        stage('Deploy to the System'){
-                echo "Devops Change trigger change request"
-                snDevOpsChange()
+//         stage('Deploy to the System'){
+//                 echo "Devops Change trigger change request"
+//                 snDevOpsChange()
               
-        }
+//         }
 
-      stage('Download Snapshots from Service Now') {
-            
+      stage('Export Snapshots from Service Now') {
+
+                  echo "Devops Change trigger change request"
+                 snDevOpsChange()
+
             echo "Exporting for App: ${appName} Deployable; ${deployName} Exporter name ${exporterName} "
             echo "Configfile exporter file name ${fullFileName}"
             sh  'echo "<<<<<<<<<export file is starting >>>>>>>>"'
@@ -127,7 +138,7 @@ node {
                 echo " RESPONSE FROM EXPORT : ${response}"
         }
       
-      stage("Deploying to PROD-US"){
+      stage("Deploy to PROD-US"){
             
                 echo "Reading config from file name ${fullFileName}"
                 echo " ++++++++++++ BEGIN OF File Content ***************"
@@ -136,8 +147,8 @@ node {
                 
                 echo "deploy finished successfully."
 
-                sh 'kubectl version'
-                sh 'kubectl config view'
+//                 sh 'kubectl version'
+//                 sh 'kubectl config view'
                 
                 echo "********************** BEGIN Deployment ****************"
                 echo "Applying docker image ${dockerImageNameTag}"
