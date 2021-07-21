@@ -41,7 +41,7 @@ service:
   port: 80
 
 mongo:
-  dbport : 27017
+  dbport : 9999999
   dbUrl: "https://awesome.uswest1.training-studio..mongodb"
   dbUserName : "@@dbUserName@@"
   dbPassword : "@@dbPassword@@"
