@@ -17,7 +17,7 @@ node {
       }
 
       def fileNamePrefix ='exported_file_'
-      def fullFileName="${fileNamePrefix}-${appName}-${deployableName}-${currentBuild.number}.${exportFormat}"
+      def fullFileName="${fileNamePrefix}-${deployableName}-${currentBuild.number}.${exportFormat}"
       def changeSetId=""
       def componentName="paymentservice.v1.1"
       def collectionName="release-1.0"
