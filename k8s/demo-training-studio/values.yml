@@ -40,6 +40,11 @@ service:
   type: ClusterIP
   port: 80
 
+mongo:
+  dbport : 900000
+  dbUserName : "@@dbusername@@"
+  dbPassword : "@@dbPassword@@"
+
   
 routing:
   enabled: true 
