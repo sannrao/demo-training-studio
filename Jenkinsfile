@@ -20,7 +20,7 @@ node {
       def fullFileName="${fileNamePrefix}-${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
       def changeSetId=""
       def snapshotName=""
-      def exporterName ='Santosh-yaml' 
+      def exporterName ='k8s-exporter-yaml-prod-us' 
       def dockerImageName = "santoshnrao/demo-training-studio"
       def dockerImageTag=""
 
