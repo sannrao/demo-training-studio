@@ -1,8 +1,10 @@
-# Default values for demo-training-studio.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 replicaCount: 2
+
+mongo:
+  dbport : 999999
+  dbUrl: "https://awesome.uswest1.training-studio..mongodb"
+  dbUserName : "@@dbUserName@@"
+  dbPassword : "@@dbPassword@@"
 
 image:
   repository: santoshnrao/demo-training-studio
@@ -13,6 +15,8 @@ image:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -39,13 +43,6 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
-
-mongo:
-  dbport : 27017
-  dbUrl: "https://awesome.uswest1.training-studio..mongodb"
-  dbUserName : "@@dbUserName@@"
-  dbPassword : "@@dbPassword@@"
-
   
 routing:
   enabled: true 
