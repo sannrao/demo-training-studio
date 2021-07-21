@@ -143,7 +143,7 @@ node {
                 echo "Applying docker image ${dockerImageNameTag}"
 
             //    sh "helm upgrade demo-training-studio -f k8s/demo-training-studio/values.yml k8s/demo-training-studio/ -i  --set image.tag=${dockerImageTag} --set image.repository=${dockerImageName}"  
-            sh "helm upgrade demo-training-studio -f ${fullFileName}" k8s/demo-training-studio/ -i  --set image.tag=${dockerImageTag} --set image.repository=${dockerImageName}"  
+            sh "helm upgrade demo-training-studio -f ${fullFileName} k8s/demo-training-studio/ -i  --set image.tag=${dockerImageTag} --set image.repository=${dockerImageName}"  
             //    sh "kubectl apply -f k8s/demo-training-studio-dev.yml --image ${dockerImageName}"
 
                 echo "********************** END Deployment ****************"
