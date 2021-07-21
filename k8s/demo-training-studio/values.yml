@@ -41,7 +41,7 @@ service:
   port: 80
 
 mongo:
-  dbport : 900000
+  dbport : 27017
   dbUserName : "@@dbusername@@"
   dbPassword : "@@dbPassword@@"
 
