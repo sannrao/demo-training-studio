@@ -3,7 +3,7 @@ node {
       def app     
       def appName='Payment Fulfillment Service'
       def snapName=''
-      def deployName = 'PROD-US'
+      def deployableName = 'PROD-US'
       def setYamlUpload = true
       
       // Json Example
@@ -12,15 +12,18 @@ node {
 
       // Yaml Example
       if(setYamlUpload){
-            exportFormat ='yaml'      
+            exportFormat ='yaml'
             configFilePath = "k8s/demo-training-studio/values"
       }
 
       def fileNamePrefix ='exported_file_'
-      def fullFileName="${fileNamePrefix}-${appName}-${deployName}-${currentBuild.number}.${exportFormat}"
+      def fullFileName="${fileNamePrefix}-${appName}-${deployableName}-${currentBuild.number}.${exportFormat}"
       def changeSetId=""
+      def componentName="paymentservice.v1.1"
+      def collectionName="release-1.0"
       def snapshotName=""
       def exporterName ='k8s-exporter-yaml-prod-us' 
+      def exporterArgs = '{"component": "' + componentName + '", "collection": "' + collectionName + '", "deployable": "' + deployableName + '"}'
       def dockerImageName = "santoshnrao/demo-training-studio"
       def dockerImageTag=""
 
@@ -88,9 +91,9 @@ node {
 
     stage("Get snapshot status"){
           
-        echo "Triggering Get snapshots for applicationName:${appName},deployableName:${deployName},changeSetId:${changeSetId}"
+        echo "Triggering Get snapshots for applicationName:${appName},deployableName:${deployableName},changeSetId:${changeSetId}"
 
-        changeSetResults = snDevOpsConfigGetSnapshots(applicationName:"${appName}",deployableName:"${deployName}",changeSetId:"${changeSetId}")
+        changeSetResults = snDevOpsConfigGetSnapshots(applicationName:"${appName}",deployableName:"${deployableName}",changeSetId:"${changeSetId}")
         echo "ChangeSet Result : ${changeSetResults}"
         
         def changeSetResultsObject = readJSON text: changeSetResults
@@ -115,9 +118,9 @@ node {
     }
 
     stage('Publish the snapshot'){
-        echo "Step to publish snapshot applicationName:${appName},deployableName:${deployName} snapshotName:${snapshotName}"
-        publishSnapshotResults = snDevOpsConfigPublish(applicationName:"${appName}",deployableName:"${deployName}",snapshotName: "${snapshotName}")
-        echo " Publish result for applicationName:${appName},deployableName:${deployName} snapshotName:${snapshotName} is ${publishSnapshotResults} "
+        echo "Step to publish snapshot applicationName:${appName},deployableName:${deployableName} snapshotName:${snapshotName}"
+        publishSnapshotResults = snDevOpsConfigPublish(applicationName:"${appName}",deployableName:"${deployableName}",snapshotName: "${snapshotName}")
+        echo " Publish result for applicationName:${appName},deployableName:${deployableName} snapshotName:${snapshotName} is ${publishSnapshotResults} "
     }
 
 //         stage('Deploy to the System'){
@@ -131,10 +134,10 @@ node {
                   echo "Devops Change trigger change request"
                  snDevOpsChange()
 
-            echo "Exporting for App: ${appName} Deployable; ${deployName} Exporter name ${exporterName} "
+            echo "Exporting for App: ${appName} Deployable; ${deployableName} Exporter name ${exporterName} "
             echo "Configfile exporter file name ${fullFileName}"
             sh  'echo "<<<<<<<<<export file is starting >>>>>>>>"'
-               response = snDevOpsConfigExport(applicationName: "${appName}", snapshotName: "${snapName}", deployableName: "${deployName}",exporterFormat: "${exportFormat}", fileName:"${fullFileName}",exporterName: "${exporterName}")
+               response = snDevOpsConfigExport(applicationName: "${appName}", snapshotName: "${snapName}", deployableName: "${deployableName}",exporterFormat: "${exportFormat}", fileName:"${fullFileName}", exporterName: "${exporterName}", exporterArgs: "${exporterArgs}")
                 echo " RESPONSE FROM EXPORT : ${response}"
         }
       
