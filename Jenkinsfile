@@ -99,7 +99,7 @@ node {
             
           }
           if (!snapshotName?.trim()){
-                error "No snapshot found to proceed" ;
+                error "No valid snapshot found to proceed" ;
           }
           echo "Snapshot Name : ${snapshotName} "                
           
