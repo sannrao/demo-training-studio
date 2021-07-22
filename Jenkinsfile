@@ -19,10 +19,10 @@ node {
       def fileNamePrefix ='exported_file_'
       def fullFileName="${fileNamePrefix}-${deployableName}-${currentBuild.number}.${exportFormat}"
       def changeSetId=""
-      def componentName="paymentservice.v1.1"
+      def componentName="paymentService-v1.1"
       def collectionName="release-1.0"
       def snapshotName=""
-      def exporterName ='k8s-exporter-yaml-prod-us' 
+      def exporterName ='k8s-exporter' 
       def exporterArgs = '{"component": "' + componentName + '", "collection": "' + collectionName + '", "deployable": "' + deployableName + '"}'
       def dockerImageName = "santoshnrao/demo-training-studio"
       def dockerImageTag=""
