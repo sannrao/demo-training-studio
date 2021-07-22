@@ -31,7 +31,7 @@ node {
             
             checkout scm    
 
-            snDevOpsStep()
+            // snDevOpsStep()
 
             app = docker.build("santoshnrao/demo-training-studio")    
             
