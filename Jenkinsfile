@@ -27,10 +27,6 @@ node {
       def dockerImageName = "santoshnrao/demo-training-studio"
       def dockerImageTag=""
 
-//       stage('Clone repository') {               
-             
-//             checkout scm    
-//       }     
       stage('Build image') {   
             
             checkout scm    
@@ -81,13 +77,6 @@ node {
             
       }
 
-//     stage("Register change set to pipeline"){
-
-//         echo "Change set registration for ${changeSetId}"
-//         changeSetRegResult = snDevOpsConfigRegisterChangeSet(changesetId:"${changeSetId}")
-//         echo "change set registration set result ${changeSetRegResult}"
-
-//     }
 
     stage("Get snapshot status"){
           
@@ -97,7 +86,6 @@ node {
         echo "ChangeSet Result : ${changeSetResults}"
         
         def changeSetResultsObject = readJSON text: changeSetResults
-//         def changeSetResultsObject = jsonSlurper.parseText("${changeSetResults}")
         
           changeSetResultsObject.each {
 
@@ -117,50 +105,41 @@ node {
           
     }
 
-    stage('Publish the snapshot'){
-        echo "Step to publish snapshot applicationName:${appName},deployableName:${deployableName} snapshotName:${snapshotName}"
-        publishSnapshotResults = snDevOpsConfigPublish(applicationName:"${appName}",deployableName:"${deployableName}",snapshotName: "${snapshotName}")
-        echo " Publish result for applicationName:${appName},deployableName:${deployableName} snapshotName:${snapshotName} is ${publishSnapshotResults} "
-    }
-
-//         stage('Deploy to the System'){
-//                 echo "Devops Change trigger change request"
-//                 snDevOpsChange()
-              
-//         }
+      stage('Publish the snapshot'){
+            echo "Step to publish snapshot applicationName:${appName},deployableName:${deployableName} snapshotName:${snapshotName}"
+            publishSnapshotResults = snDevOpsConfigPublish(applicationName:"${appName}",deployableName:"${deployableName}",snapshotName: "${snapshotName}")
+            echo " Publish result for applicationName:${appName},deployableName:${deployableName} snapshotName:${snapshotName} is ${publishSnapshotResults} "
+      }
 
       stage('Export Snapshots from Service Now') {
 
-                  echo "Devops Change trigger change request"
-                 snDevOpsChange()
+            echo "Devops Change trigger change request"
+            snDevOpsChange()
 
             echo "Exporting for App: ${appName} Deployable; ${deployableName} Exporter name ${exporterName} "
             echo "Configfile exporter file name ${fullFileName}"
             sh  'echo "<<<<<<<<<export file is starting >>>>>>>>"'
-               response = snDevOpsConfigExport(applicationName: "${appName}", snapshotName: "${snapName}", deployableName: "${deployableName}",exporterFormat: "${exportFormat}", fileName:"${fullFileName}", exporterName: "${exporterName}", exporterArgs: "${exporterArgs}")
-                echo " RESPONSE FROM EXPORT : ${response}"
+            response = snDevOpsConfigExport(applicationName: "${appName}", snapshotName: "${snapName}", deployableName: "${deployableName}",exporterFormat: "${exportFormat}", fileName:"${fullFileName}", exporterName: "${exporterName}", exporterArgs: "${exporterArgs}")
+            echo " RESPONSE FROM EXPORT : ${response}"
+
         }
       
       stage("Deploy to PROD-US"){
             
-                echo "Reading config from file name ${fullFileName}"
-                echo " ++++++++++++ BEGIN OF File Content ***************"
-                sh "cat ${fullFileName}"
-                echo " ++++++++++++ END OF File content ***************"
-                
-                echo "deploy finished successfully."
+            echo "Reading config from file name ${fullFileName}"
+            echo " ++++++++++++ BEGIN OF File Content ***************"
+            sh "cat ${fullFileName}"
+            echo " ++++++++++++ END OF File content ***************"
+            
+            echo "deploy finished successfully."
 
-//                 sh 'kubectl version'
-//                 sh 'kubectl config view'
-                
-                echo "********************** BEGIN Deployment ****************"
-                echo "Applying docker image ${dockerImageNameTag}"
+            
+            echo "********************** BEGIN Deployment ****************"
+            echo "Applying docker image ${dockerImageNameTag}"
 
-            //    sh "helm upgrade demo-training-studio -f k8s/demo-training-studio/values.yml k8s/demo-training-studio/ -i  --set image.tag=${dockerImageTag} --set image.repository=${dockerImageName}"  
             sh "helm upgrade demo-training-studio -f ${fullFileName} k8s/demo-training-studio/ -i  --set image.tag=${dockerImageTag} --set image.repository=${dockerImageName}"  
-            //    sh "kubectl apply -f k8s/demo-training-studio-dev.yml --image ${dockerImageName}"
 
-                echo "********************** END Deployment ****************"
+            echo "********************** END Deployment ****************"
 
             
       }
