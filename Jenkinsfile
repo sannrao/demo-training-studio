@@ -38,10 +38,15 @@ node {
             
        }     
       stage('Test') {           
-            app.inside {            
+//             app.inside {            
              
-             sh 'echo "Tests passed"'        
-            }    
+//              sh 'echo "Tests passed"'        
+//             }  
+            post {
+                success {
+                    junit '**/target/surefire-reports/*.xml' 
+                }
+            }
         }     
       
        stage('Push docker Image') {
