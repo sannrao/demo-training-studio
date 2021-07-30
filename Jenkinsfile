@@ -27,7 +27,7 @@ node {
       def dockerImageName = "santoshnrao/demo-training-studio"
       def dockerImageTag=""
 
-      stage('Build image') {     
+      stage('Build image') {      
             
             checkout scm    
 
