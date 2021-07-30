@@ -44,7 +44,7 @@ node {
             }    
         }     
       
-       stage('Push docker Image') {
+       stage('Push docker Image') { 
             sh 'ls -a'
 
             dockerImageTag = env.BUILD_NUMBER
