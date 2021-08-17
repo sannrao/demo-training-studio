@@ -1,7 +1,8 @@
 node {    
 
       def app     
-      def appName='Payment Fulfillment Service'
+//       def appName='Payment Fulfillment Service'
+      def appName='PaymentDemo'
       def snapName=''
       def deployableName = 'PROD-US'
       def setYamlUpload = true
