@@ -116,8 +116,7 @@ node {
             sh  'echo "<<<<<<<<<export file is starting >>>>>>>>"'
 //            response = snDevOpsConfigExport(applicationName: "${appName}", snapshotName: "${snapName}", deployableName: "${deployableName}",exporterFormat: "${exportFormat}", fileName:"${fullFileName}", exporterName: "${exporterName}", exporterArgs: "${exporterArgs}")
             exportResponse = snDevOpsConfigExport(applicationName: "${appName}", snapshotName: "${snapName}", deployableName: "${deployableName}",exporterFormat: "${exportFormat}", fileName:"${fullFileName}", exporterName: "${exporterName}", exporterArgs: "${exporterArgs}")
-            echo " RESPONSE FROM EXPORT : ${response}"
-            assert it.validation == "passed"
+            echo " RESPONSE FROM EXPORT : ${exportResponse}"
 
         }
       
