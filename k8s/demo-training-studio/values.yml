@@ -1,7 +1,7 @@
 replicaCount: 2
 
 mongo:
-  dbport : "27017"
+  dbport : "99999"
   dbUrl: "https://awesome.uswest1.training-studio..mongodb"
   dbUserName : "@@dbUserName@@"
   dbPassword : "@@dbPassword@@"
@@ -69,7 +69,7 @@ ingress:
 resources: 
   limits:
     cpu: 100m
-    memory: 512Mi
+    memory: 256Mi
   requests:
     cpu: 100m
     memory: 128Mi
