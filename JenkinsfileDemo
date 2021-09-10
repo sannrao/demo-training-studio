@@ -109,19 +109,7 @@ node {
       stage('Export Snapshots from Service Now') {
 
             echo "Devops Change trigger change request"
-//            snDevOpsChange()
-            snDevOpsChange(changeRequestDetails: """
-            {
-                  "setCloseCode": false,
-                  "attributes": {
-                        "category": "DevOps",
-                        "priority": "4",
-                        "cmdb_ci": "Servers - PaymentDemo - Prod-US",
-                        "business_service": "PaymentDemo - PROD-US",
-                        "start_date": "2021-09-20 00:00:00",
-                        "end_date": "2021-09-20 02:00:00"
-                  }
-            }""")
+            snDevOpsChange()
 
             echo "Exporting for App: ${appName} Deployable; ${deployableName} Exporter name ${exporterName} "
             echo "Configfile exporter file name ${fullFileName}"
