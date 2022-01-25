@@ -177,7 +177,7 @@ pipeline {
             
                   script{
                         
-                        changeSetResults = snDevOpsConfigGetSnapshots(applicationName:"${appName}",deployableName:"${deployableName}",changesetNumber:"${changeSetId}")
+                        changeSetResults = snDevOpsConfigGetSnapshots(applicationName:"${appName}",deployableName:"${deployableName}",changesetNumber:"${changeSetId}",outputFormat:"xml")
                         if (!changeSetResults){
                               isSnapshotCreated=false
                               echo "no snapshot were created"
@@ -356,6 +356,13 @@ pipeline {
                   }
                   
             }
+      }
+      
+      post{
+          always{
+                 echo ">>>>>Displaying Test results"
+                 junit '**/*.xml'
+          }
       }
 
 }
