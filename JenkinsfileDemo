@@ -29,6 +29,7 @@ node {
       
       // other vars
       def exportResponse = "true"
+      // def dummyChange = "false"
 
       stage('Build Image') {      
             
