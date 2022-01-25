@@ -45,7 +45,7 @@ pipeline {
                               */ 
                               
                               exportFormat ='yaml'
-                              configFilePath = "k8s/helm/values.yml"
+                              configFilePath = "k8s/demo-training-studio/values.yml"
 
                               /**
                               * Devops Config exporter related information
