@@ -1,7 +1,7 @@
 replicaCount: "1"
 
 mongo:
-  dbport : "90000"
+  dbport : "90001"
   dbUrl: "https://awesome.uswest1.testing.mongodb"
   dbUserName : "@@dbUserName@@"
   dbPassword : "@@dbPassword@@"
