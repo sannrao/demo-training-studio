@@ -75,6 +75,6 @@ node {
         // kubernetesDeploy(kubeconfigId: 'devops-config-demo-1',               // REQUIRED
 
         //      configs: 'k8s/', // REQUIRED
-        // )
+        // )  
        }
 }
